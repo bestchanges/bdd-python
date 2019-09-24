@@ -1,14 +1,14 @@
 Feature: As a lazy developer I want to test todomvc.com automatically
 
-  Scenario: Enter new todo-item and ensure it was added
-    Given user open webpage http://todomvc.com/examples/react/
-    And there are no todo-item 'My first task' in the list
+  Background:
+    Given user opens webpage http://todomvc.com/examples/react/
+
+  Scenario: Enter new todo-item and ensure it is added
+    Given there are no todo-item 'My first task' in the list
     When user add task 'My first task'
     Then there is todo-item 'My first task' in the list
 
-  Scenario: Complete todo item
-    Given user open webpage http://todomvc.com/examples/react/
-    And user add task 'Complete'
-    When user click checkbox before task 'Complete'
-    Then there is todo-item 'Complete' in the list
-    And todo-item 'Complete' is completed
+  Scenario: user creates new item and mark it as complited
+    Given user add task 'To complete'
+    When click checkbox for task 'To complete'
+    Then task 'To complete' is completed
