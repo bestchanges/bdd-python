@@ -18,7 +18,7 @@ def find_task_by_name(browser: WebDriver, task_name) -> Optional[WebElement]:
 
 
 def get_complete_control_for_task_li(task_li):
-    return task_li.find_element_by_xpath('//input[@class="toggle"]')
+    return task_li.find_element_by_xpath(f'//label[text()="{task_li.text}"]/preceding-sibling::input')
 
 
 def get_task_completed(task_li: WebElement):
