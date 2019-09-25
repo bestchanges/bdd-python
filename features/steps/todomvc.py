@@ -13,7 +13,11 @@ def find_tasks(browser: WebDriver) -> List[WebElement]:
 
 
 def find_task_by_name(browser: WebDriver, task_name) -> Optional[WebElement]:
-    found_li = browser.find_element_by_xpath(f'//label[text()="{task_name}"]')
+    """
+    find tag label with the task text in it
+    :return: outer li tag
+    """
+    found_li = browser.find_element_by_xpath(f'//label[text()="{task_name}"]/../..')
     return found_li
 
 
@@ -67,7 +71,12 @@ def step_impl(context, task_name):
     checkbox.click()
 
 
-@then("task '{task_name}' is completed")
-def step_impl(context, task_name):
+@then("task '{task_name}' {is_or_is_not} completed")
+def step_impl(context, task_name, is_or_is_not):
     task = find_task_by_name(context.browser, task_name)
-    assert task.get_attribute('class') != 'completed'
+    if is_or_is_not == 'is':
+        assert task.get_attribute('class') == 'completed'
+    elif is_or_is_not == 'is not':
+        assert task.get_attribute('class') != 'completed'
+    else:
+        assert False
